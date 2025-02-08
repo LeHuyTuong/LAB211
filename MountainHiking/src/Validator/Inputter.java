@@ -112,6 +112,18 @@ public class Inputter {
             }
         }
     } 
+    public static String getFormatUpdate(String data, String pattern){
+        while(true){
+            if(data != null && Acceptable.isValid(data, pattern)){
+                return data;
+            }else if(data == null){
+                return "Keeping old data";
+            }
+            else{
+                return "Invalid input, enter again";
+            }
+        }
+    }
     
     public boolean checkCodeExist(String id) {
         try (FileReader f = new FileReader(MOUNTAIN_INFO);
@@ -138,6 +150,25 @@ public class Inputter {
                 break;
             } else {
                 System.out.println("Mountain code does not exist. Please try again.");
+            }
+        }
+        return mountainCode;
+    }
+    
+    public String inputMountainCodeUpdate(){
+        String mountainCode = "";
+        while(true){
+            System.out.println("Enter new Mountain Code:");
+            mountainCode = sc.nextLine();
+            if(checkCodeExist(mountainCode)){
+                break;
+            }
+            else if(mountainCode.isEmpty()){
+                break;
+            }
+            else{
+                System.out.println("Mountain code does not exist. Please try again.");
+                continue;
             }
         }
         return mountainCode;
