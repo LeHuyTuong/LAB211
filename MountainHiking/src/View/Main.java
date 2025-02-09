@@ -26,7 +26,7 @@ public class Main {
         String fileSave = "registrations.dat";
         int choice = 0;
         do{
-            inp.menu();
+            Menu.menu();
             choice = inp.getChoice();
             switch(choice){
                 case 1:
@@ -51,11 +51,12 @@ public class Main {
                     controller.searchingByName(searchName);
                     break;
                 case 6:
-                    inp.menuChoiceCampus();
+                    Menu.menuChoiceCampus();
                     String campus = Inputter.getString("Choice Campus", Acceptable.CAMPUS_CODE);
                     controller.filterDataByCampus(campus);
                     break;
                 case 7:
+                    controller.statisticalizeByMountainPeak();
                     break;
                 case 8:
                     controller.saveToFile( fileSave);
