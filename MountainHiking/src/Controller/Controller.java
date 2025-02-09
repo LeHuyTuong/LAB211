@@ -9,17 +9,12 @@ import Model.Student;
 import View.Menu;
 import Validator.Acceptable;
 import Validator.Inputter;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -37,17 +32,18 @@ public class Controller {
     public final String VINAPHONE_PHONE_VALID = "^(088|091|094|081|082|083|084|085)\\d{7}$";
     
     private final String HEADER_TABLE =
-        "---------------------------------------------------------------------------\n" +
-        "Student ID     | Name          | Phone         | Peak Code     | Fee        \n" +
-        "---------------|---------------|---------------|---------------|----------";
+        "--------------------------------------------------------------------------------\n" +
+        "Student ID     | Name                 | Phone         | Peak Code     | Fee        \n" +
+        "---------------|----------------------|---------------|---------------|---------";
     
     private final String FOOTER_TABLE = 
-        "---------------------------------------------------------------------------";
+        "--------------------------------------------------------------------------------";
 
         
     
     public Controller() {
         students = new ArrayList<>();
+        importData(REGISTRATIONS__INFO);
     }
     
     public boolean isDuplicate(String id) {
@@ -152,7 +148,7 @@ public class Controller {
         } else {
             System.out.println(HEADER_TABLE);
             for (Student s : students) {
-                System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
+                System.out.printf("%-14s | %-20s | %-13s | %-13s | %,.0f%n",
                         s.getStudentID(),
                         s.getName(),
                         s.getPhoneNumber(),
@@ -200,10 +196,10 @@ public class Controller {
 
     public void searchingByName(String nameToSearch) {
         System.out.println(HEADER_TABLE);
-        for (Student s : students) {
-            if (s.getName().endsWith(nameToSearch)) {
-                System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
-                        s.getStudentID(),
+        for(Student s : students){
+            if(s.getName().endsWith(nameToSearch)){
+                System.out.printf("%-14s | %-20s | %-13s | %-13s | %,.0f%n",
+                        s.getMountainCode(),
                         s.getName(),
                         s.getPhoneNumber(),
                         s.getMountainCode(),
@@ -215,15 +211,14 @@ public class Controller {
 
     public void filterDataByCampus(String dataByCampus) {
         System.out.println(HEADER_TABLE);
-        for (Student s : students) {
-            if (s.getStudentID().startsWith(dataByCampus)) {
-                System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
+        for(Student s : students){
+            if(s.getStudentID().startsWith(dataByCampus)){
+                System.out.printf("%-14s | %-20s | %-13s | %-13s | %,.0f%n",
                         s.getStudentID(),
                         s.getName(),
                         s.getPhoneNumber(),
                         s.getMountainCode(),
-                        s.getTutionFee()
-                );
+                        s.getTutionFee());
             }
         }
         System.out.println(FOOTER_TABLE);
