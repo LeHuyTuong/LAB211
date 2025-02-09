@@ -69,7 +69,11 @@ public class Student implements Serializable{
     public String getMountainCode() {
         return String.format("MT%02d", Integer.parseInt(mountainCode));
     }
-
+    
+    public String getMountainCodeStatistisc(){
+        return mountainCode;
+    }
+    
     public void setMountainCode(String mountainCode) {
         this.mountainCode = mountainCode;
     }
