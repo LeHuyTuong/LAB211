@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Student;
+import View.Menu;
 import Validator.Acceptable;
 import Validator.Inputter;
 import java.io.BufferedReader;
@@ -34,11 +35,21 @@ public class Controller {
 
     public final String VIETTEL_PHONE_VALID = "^(086|096|097|098|032|033|034|035|036|037|038|039)\\d{7}$";
     public final String VINAPHONE_PHONE_VALID = "^(088|091|094|081|082|083|084|085)\\d{7}$";
+    
+    private final String HEADER_TABLE =
+        "---------------------------------------------------------------------------\n" +
+        "Student ID     | Name          | Phone         | Peak Code     | Fee        \n" +
+        "---------------|---------------|---------------|---------------|----------";
+    
+    private final String FOOTER_TABLE = 
+        "---------------------------------------------------------------------------";
 
+        
+    
     public Controller() {
         students = new ArrayList<>();
     }
-
+    
     public boolean isDuplicate(String id) {
         for (Student s : students) {
             if (id.equals(s.getStudentID())) {
@@ -81,7 +92,7 @@ public class Controller {
             System.out.println("This student has not registered yet.");
             return;
         }
-        inp.menuChoiceUpdate();
+        Menu.menuChoiceUpdate();
         int choice = inp.getChoiceUpdate();
         switch (choice) {
             case 1:
@@ -139,9 +150,7 @@ public class Controller {
         if (students.isEmpty()) {
             System.out.println("No students have registered yet.");
         } else {
-            System.out.println("---------------------------------------------------------------------------");
-            System.out.println("Student ID     | Name          | Phone         | Peak Code     | Fee         ");
-            System.out.println("---------------------------------------------------------------------------");
+            System.out.println(HEADER_TABLE);
             for (Student s : students) {
                 System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
                         s.getStudentID(),
@@ -151,6 +160,7 @@ public class Controller {
                         s.getTutionFee());
             }
         }
+        System.out.println(FOOTER_TABLE);
     }
 
     public void deleteRegistered(String StudentCodeToDelete) {
@@ -189,9 +199,7 @@ public class Controller {
     }
 
     public void searchingByName(String nameToSearch) {
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Student ID     | Name          | Phone         | Peak Code     | Fee         ");
-        System.out.println("---------------------------------------------------------------------------");
+        System.out.println(HEADER_TABLE);
         for (Student s : students) {
             if (s.getName().endsWith(nameToSearch)) {
                 System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
@@ -202,12 +210,11 @@ public class Controller {
                         s.getTutionFee());
             }
         }
+        System.out.println(FOOTER_TABLE);
     }
 
     public void filterDataByCampus(String dataByCampus) {
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Student ID     | Name          | Phone         | Peak Code     | Fee         ");
-        System.out.println("---------------------------------------------------------------------------");
+        System.out.println(HEADER_TABLE);
         for (Student s : students) {
             if (s.getStudentID().startsWith(dataByCampus)) {
                 System.out.printf("%-14s | %-13s | %-13s | %-13s | %,.0f%n",
@@ -219,8 +226,13 @@ public class Controller {
                 );
             }
         }
+        System.out.println(FOOTER_TABLE);
     }
 
+    public void statisticalizeByMountainPeak(){
+        Statistics stats = new Statistics(students);
+        stats.show();
+    }
     public void importData(String fileSaveName) {
         FileInputStream f = null;
         ObjectInputStream os = null;
