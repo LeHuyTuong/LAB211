@@ -9,7 +9,6 @@ import java.util.HashMap;
 import Model.StatisticalInfo;
 import Model.Student;
 import java.util.List;
-import java.util.Map;
 /**
  *
  * @author USER
@@ -17,32 +16,33 @@ import java.util.Map;
 public class Statistics extends HashMap<String, StatisticalInfo>{
 
     private final String HEADER_TABLE =
-        "---------------------------------------------------------------------------\n" +
-        "   Peak Name     |    Number of Participants       |    Total Cost         \n" +
-        "-----------------|---------------------------------|-----------------------";
+        "--------------------------------------------------------------------------------\n" +
+        "   Peak Name           |    Number of Participants       |    Total Cost         \n" +
+        "-----------------------|---------------------------------|----------------------";
     
     private final String FOOTER_TABLE = 
-        "---------------------------------------------------------------------------";
+        "--------------------------------------------------------------------------------";
 
     
     public Statistics() {
         super();
     }
 
-    public Statistics(List<Student> l){
+    public Statistics(List<Student> students){
         super();
-        statisticalize(l);
+        statisticalize(students);
     }
 
-    public final void statisticalize(List<Student> l) {
-        for(Student i : l){
-            if(this.containsKey(i.getMountainCode())){
-                StatisticalInfo x = this.get(i.getMountainCode());
+    public final void statisticalize(List<Student> students) {
+        for(Student i : students){
+            String mountainName = StatisticalInfo.getMountainName(i.getMountainCodeStatistisc());
+            if(this.containsKey(mountainName)){
+                StatisticalInfo x = this.get(mountainName);
                 x.setNumOfStudent(x.getNumOfStudent() + 1);
                 x.setTotalCost(x.getTotalCost() + i.getTutionFee());
             }else{
-                StatisticalInfo z = new StatisticalInfo(i.getMountainCode(), l, i.getTutionFee());
-                this.put(i.getMountainCode(), z);
+                StatisticalInfo z = new StatisticalInfo(mountainName, 1, i.getTutionFee());
+                this.put(mountainName, z);
             }
         }
     }
