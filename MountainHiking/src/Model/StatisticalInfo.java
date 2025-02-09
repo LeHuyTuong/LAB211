@@ -26,10 +26,12 @@ public class StatisticalInfo {
         this.numOfStudent = 1;
         this.totalCost =tutionFee;    }
 
-    @Override
     public String toString() {
-        return  mountainCode +  numOfStudent  + totalCost + '}';
-    }
+        return String.format("%-14s   | %-14d                  | %,.0f",
+            this.mountainName,
+            this.numOfStudent,
+            this.totalCost
+    );
     public StatisticalInfo(String mountainCoe, int numOfStudent, double totalCost) {
         this.mountainCode = mountainCoe;
         this.numOfStudent = numOfStudent;
