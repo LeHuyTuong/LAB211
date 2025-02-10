@@ -22,7 +22,7 @@ import java.util.Scanner;
  * @author USER
  */
 public class Controller {
-
+    private boolean isSaved = false;
     private ArrayList<Student> students = new ArrayList<>();
     private String MOUNTAIN_INFO = "MountainList.csv";
     private String REGISTRATIONS__INFO = "registrations.dat";
@@ -72,6 +72,7 @@ public class Controller {
         System.out.print("Enter Mountain Code: ");
         s.setMountainCode(inp.inputMountainCode());
         students.add(s);
+        isSaved = false;
         System.out.println("Success add new student");
     }
 
@@ -259,6 +260,7 @@ public class Controller {
                 oos.writeObject(i);
             }
             oos.close();
+            isSaved = true;
             System.out.println("Successfully to save in " + fileSaveName);
         } catch (Exception e) {
             System.out.println("Error opening file");
@@ -272,18 +274,29 @@ public class Controller {
 
     }
 
-    public boolean exitSave() {
+    public void exitSave() {
         Scanner sc = new Scanner(System.in);
-        if (students.isEmpty()) {
-            System.out.println("You haven't saved yet.Do you want to save before exiting? (Y/N)");
-            String sure = sc.nextLine().toLowerCase();
-            if (sure.equalsIgnoreCase("y")) {
-                saveToFile(REGISTRATIONS__INFO);
-                System.out.println("Data saved successfully");
+        while(true){
+            if (!isSaved) {
+                System.out.println("You haven't saved yet.Do you want to save before exiting? (Y/N)");
+                String sure = sc.nextLine().toLowerCase();
+                if (sure.equalsIgnoreCase("y")) {
+                    saveToFile(REGISTRATIONS__INFO);
+                    System.out.println("Data saved successfully");
+                    System.exit(0);
+                }
+                else if(sure.equalsIgnoreCase("n")){
+                    System.out.println("Exit program without save");
+                    System.exit(0);
+                }else{
+                    System.out.println("Invalid input, try again");
+                }
+            }
+            else{
+                System.out.println("Exit program");
+                System.exit(0);
             }
         }
-        System.out.println("Exit program ");
-        return true;
     }
 
 }
