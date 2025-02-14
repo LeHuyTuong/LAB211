@@ -229,34 +229,26 @@ public class Controller {
         int choice = inp.choiceFile();
         switch(choice){
             case 1:
-                Customers.saveToFile(CUSTOMERS_FILE);
+                Customers.saveToFile(CUSTOMERS_FILE,customers);
                 break;
             case 2:
+                Orders.saveToFile(FEAST_ORDER_SERVICE_FILE,ordersList);
                 break;
         }
     }
     
     public void displayData(){
-        if(customers!= null){
-            importDataCustomer(CUSTOMERS_FILE);
+        Menu.menuDisplayList();
+        int choice = inp.choiceFile();
+        switch(choice){
+            case 1: 
+                Customers.showData(customers);
+                break;
+            case 2: 
+                
+             
         }
-        boolean check = false;
-        for(Customer c : customers){
-            if(!check){
-                System.out.println(HEADER_CUSTOMER_INFO);
-                check = true;
-            }
-            System.out.printf("%-6s | %-25s |%-10s | %-20s%n",
-                    c.getCustomerCode(),
-                    c.getName(),
-                    c.getPhoneNumber(),
-                    c.getEmail());
-        }
-        if(check){
-            System.out.println(FOOTER_INFO);
-        }else{
-            System.out.println("Does not have any customer information");
-        }
+        
     }
 
 }
